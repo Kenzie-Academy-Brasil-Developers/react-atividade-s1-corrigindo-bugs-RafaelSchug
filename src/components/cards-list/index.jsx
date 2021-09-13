@@ -1,21 +1,22 @@
-import { useState } from "react";
-import { Card } from "../card";
+import React, { useState } from "react";
+import Card from "../card";
 import "./style.css";
 
 const CardsList = ({ cardsList }) => {
   const [suitFilter, setSuitFilter] = useState(false);
 
   const handleSuitFilter = (e) => {
-    if (e.target.id = suitFilter) {
-      suitFilter = true;
-      e.target.checked = false;
+    if (e.target.id !== suitFilter) {
+      setSuitFilter(e.target.id);
     } else {
-      suitFilter = e.target.id
+      setSuitFilter(false);
+      e.target.checked = false;
     }
   };
 
   return (
-    <div className="filter-container">
+    <React.Fragment>
+      <div className="filter-container">
       <p>Filtrar por naipe</p>
       <div>
         <input
@@ -24,7 +25,7 @@ const CardsList = ({ cardsList }) => {
           id="SPADES"
           name="suit"
         />
-        <label for="SPADES">Espadas</label>
+        <label htmlFor="SPADES">Espadas</label>
 
         <input
           onClick={handleSuitFilter}
@@ -32,7 +33,7 @@ const CardsList = ({ cardsList }) => {
           id="HEARTS"
           name="suit"
         />
-        <label for="HEARTS">Copas</label>
+        <label htmlFor="HEARTS">Copas</label>
 
         <input
           onClick={handleSuitFilter}
@@ -40,7 +41,7 @@ const CardsList = ({ cardsList }) => {
           id="CLUBS"
           name="suit"
         />
-        <label for="CLUBS">Paus</label>
+        <label htmlFor="CLUBS">Paus</label>
 
         <input
           onClick={handleSuitFilter}
@@ -48,23 +49,24 @@ const CardsList = ({ cardsList }) => {
           id="DIAMONDS"
           name="suit"
         />
-        <label for="DIAMONDS">Ouros</label>
+        <label htmlFor="DIAMONDS">Ouros</label>
       </div>
     </div>
     <div>
-
       {!suitFilter &&
-        cardsList.map((actual, index) => {
-          return <Card card={actual} key={index} />;
+        cardsList.map((item, index) => {
+          return <Card card={item} key={index} />;
         })}
 
       {suitFilter &&
         cardsList
-          .filter((actual) => actual.suit === suitFilter)
-          .map((actual, index) => {
-            <Card card={actual} key={index} />;
+          .filter((item) => item.suit === suitFilter)
+          .map((item, index) => {
+            return <Card card={item} key={index} />;
           })}
     </div>
+    </React.Fragment>
   );
 };
 
+export default CardsList;
